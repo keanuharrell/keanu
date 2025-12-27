@@ -16,6 +16,15 @@ export function Header() {
         <div className="h-4 w-px bg-border/50" />
         <nav className="flex gap-0.5">
           <Link
+            href="/about"
+            className={cn(
+              buttonVariants({ variant: "ghost", size: "sm" }),
+              "rounded-full",
+            )}
+          >
+            About
+          </Link>
+          <Link
             href="/#projects"
             className={cn(
               buttonVariants({ variant: "ghost", size: "sm" }),
