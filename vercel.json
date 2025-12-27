@@ -1,0 +1,6 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "bunVersion": "1.2.18",
+	"regions": ["fra1"],
+	"fluid": true
+}
