@@ -18,7 +18,7 @@
     "db:check": "drizzle-kit check",
     "db:up": "drizzle-kit up",
     "db:studio": "drizzle-kit studio",
-    "auth:generate": "bunx @better-auth/cli generate",
+    "auth:generate": "bunx @better-auth/cli generate --config ./lib/auth/auth.ts --output ./db/schemas/auth.ts",
     "prepare": "husky"
   },
   "dependencies": {

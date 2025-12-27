@@ -2,7 +2,7 @@ import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata } from "next";
 import { Figtree, Geist, Geist_Mono } from "next/font/google";
-import { Footer, Header } from "@/components/layout";
+
 import "./globals.css";
 
 const figtree = Figtree({ subsets: ["latin"], variable: "--font-sans" });
@@ -51,11 +51,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={`dark ${figtree.variable}`}>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} flex min-h-screen flex-col antialiased`}
       >
-        <Header />
-        <main className="min-h-screen">{children}</main>
-        <Footer />
+        {children}
         <SpeedInsights />
         <Analytics />
       </body>
