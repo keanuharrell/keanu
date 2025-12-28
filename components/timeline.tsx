@@ -1,8 +1,12 @@
+"use client";
+
 import {
   Briefcase01Icon,
   GraduationScrollIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
+import { motion, useInView } from "motion/react";
+import { useRef } from "react";
 
 import { Badge } from "@/components/ui/badge";
 import type { Experience } from "@/lib/data";
@@ -30,17 +34,56 @@ function getIcon(type: string) {
 }
 
 export function Timeline({ experiences }: TimelineProps) {
+  const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { once: true, margin: "-50px" });
+
   return (
-    <div className="relative space-y-8">
+    <motion.div
+      ref={ref}
+      initial="hidden"
+      animate={isInView ? "visible" : "hidden"}
+      variants={{
+        hidden: { opacity: 0 },
+        visible: {
+          opacity: 1,
+          transition: { staggerChildren: 0.15 },
+        },
+      }}
+      className="relative space-y-8"
+    >
       {/* Timeline line */}
-      <div className="absolute top-0 left-4 h-full w-px bg-border" />
+      <motion.div
+        initial={{ scaleY: 0 }}
+        animate={isInView ? { scaleY: 1 } : undefined}
+        transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
+        style={{ originY: 0 }}
+        className="absolute top-0 left-4 h-full w-px bg-border"
+      />
 
       {experiences.map((exp) => {
         const Icon = getIcon(exp.type);
         return (
-          <div key={exp.id} className="relative flex gap-6 pl-12">
+          <motion.div
+            key={exp.id}
+            variants={{
+              hidden: { opacity: 0, x: -20 },
+              visible: {
+                opacity: 1,
+                x: 0,
+                transition: { duration: 0.5, ease: [0.25, 0.1, 0.25, 1] },
+              },
+            }}
+            className="relative flex gap-6 pl-12"
+          >
             {/* Icon */}
-            <div
+            <motion.div
+              variants={{
+                hidden: { scale: 0 },
+                visible: {
+                  scale: 1,
+                  transition: { duration: 0.3, ease: "easeOut" },
+                },
+              }}
               className={cn(
                 "absolute left-0 flex size-8 items-center justify-center rounded-full border bg-background",
                 exp.isCurrent && "border-primary bg-primary/10",
@@ -53,7 +96,7 @@ export function Timeline({ experiences }: TimelineProps) {
                   exp.isCurrent && "text-primary",
                 )}
               />
-            </div>
+            </motion.div>
 
             {/* Content */}
             <div className="flex-1 pb-8">
@@ -87,9 +130,9 @@ export function Timeline({ experiences }: TimelineProps) {
                 </div>
               )}
             </div>
-          </div>
+          </motion.div>
         );
       })}
-    </div>
+    </motion.div>
   );
 }
