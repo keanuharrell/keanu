@@ -7,7 +7,9 @@ import {
   Mail01Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
+import { motion, useInView } from "motion/react";
 import Link from "next/link";
+import { useRef } from "react";
 
 import { Button } from "@/components/ui/button";
 
@@ -30,12 +32,21 @@ const navLinks = [
 ];
 
 export function Footer() {
+  const ref = useRef<HTMLElement>(null);
+  const isInView = useInView(ref, { once: true, margin: "-50px" });
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
-    <footer className="mt-24 pb-8">
+    <motion.footer
+      ref={ref}
+      initial={{ opacity: 0, y: 20 }}
+      animate={isInView ? { opacity: 1, y: 0 } : undefined}
+      transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
+      className="mt-24 pb-8"
+    >
       <div className="mx-auto flex w-fit flex-col items-center gap-4 rounded-2xl border border-border/50 bg-background/80 px-6 py-5 shadow-black/5 shadow-sm ring-1 ring-white/5 ring-inset backdrop-blur-md md:flex-row md:gap-6">
         {/* Navigation */}
         <nav className="flex items-center gap-4">
@@ -55,16 +66,18 @@ export function Footer() {
         {/* Social Links */}
         <div className="flex items-center gap-3">
           {socialLinks.map((link) => (
-            <a
+            <motion.a
               key={link.name}
               href={link.href}
               target="_blank"
               rel="noopener noreferrer"
               className="text-muted-foreground transition-colors hover:text-foreground"
               aria-label={link.name}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
             >
               <HugeiconsIcon icon={link.icon} className="size-5" />
-            </a>
+            </motion.a>
           ))}
         </div>
 
@@ -89,16 +102,18 @@ export function Footer() {
         <div className="hidden h-4 w-px bg-border/50 md:block" />
 
         {/* Back to Top */}
-        <Button
-          variant="ghost"
-          size="icon"
-          className="size-8 rounded-full"
-          onClick={scrollToTop}
-          aria-label="Back to top"
-        >
-          <HugeiconsIcon icon={ArrowUp01Icon} className="size-4" />
-        </Button>
+        <motion.div whileHover={{ y: -2 }} whileTap={{ scale: 0.95 }}>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="size-8 rounded-full"
+            onClick={scrollToTop}
+            aria-label="Back to top"
+          >
+            <HugeiconsIcon icon={ArrowUp01Icon} className="size-4" />
+          </Button>
+        </motion.div>
       </div>
-    </footer>
+    </motion.footer>
   );
 }

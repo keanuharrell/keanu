@@ -2,6 +2,7 @@
 
 import { Mail01Icon, Menu01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
+import { motion } from "motion/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -31,7 +32,12 @@ export function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full py-4">
+    <motion.header
+      initial={{ opacity: 0, y: -10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
+      className="sticky top-0 z-50 w-full py-4"
+    >
       <div className="mx-auto flex h-12 w-fit items-center gap-1 rounded-full border border-border/50 bg-background/80 px-2 shadow-black/5 shadow-sm ring-1 ring-white/5 ring-inset backdrop-blur-md">
         {/* Logo */}
         <Link
@@ -129,6 +135,6 @@ export function Header() {
           </Sheet>
         </div>
       </div>
-    </header>
+    </motion.header>
   );
 }
