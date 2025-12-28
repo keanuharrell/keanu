@@ -5,14 +5,14 @@ import {
 import { HugeiconsIcon } from "@hugeicons/react";
 
 import { Badge } from "@/components/ui/badge";
-import type { Experience } from "@/db/schemas";
+import type { Experience } from "@/lib/data";
 import { cn } from "@/lib/utils";
 
 interface TimelineProps {
   experiences: Experience[];
 }
 
-function formatDate(date: Date | null): string {
+function formatDate(date: Date | null | undefined): string {
   if (!date) return "Present";
   return new Intl.DateTimeFormat("en-US", {
     year: "numeric",

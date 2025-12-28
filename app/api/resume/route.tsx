@@ -1,23 +1,14 @@
 import { renderToBuffer } from "@react-pdf/renderer";
 
-import {
-  getAllExperiences,
-  getAllProjects,
-  getAllSkills,
-  getProfile,
-} from "@/lib/db";
+import { experiences, profile, skills } from "@/lib/data";
+import { getAllProjects } from "@/lib/db";
 import { ResumeDocument } from "@/lib/pdf/resume-template";
 
 export const dynamic = "force-dynamic";
 
 export async function GET() {
   try {
-    const [profile, experiences, skills, projects] = await Promise.all([
-      getProfile(),
-      getAllExperiences(),
-      getAllSkills(),
-      getAllProjects(),
-    ]);
+    const projects = await getAllProjects();
 
     const pdfBuffer = await renderToBuffer(
       <ResumeDocument
@@ -28,9 +19,7 @@ export async function GET() {
       />,
     );
 
-    const filename = profile?.name
-      ? `${profile.name.replace(/\s+/g, "_")}_Resume.pdf`
-      : "Resume.pdf";
+    const filename = `${profile.name.replace(/\s+/g, "_")}_Resume.pdf`;
 
     return new Response(new Uint8Array(pdfBuffer), {
       headers: {

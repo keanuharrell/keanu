@@ -1,6 +1,7 @@
 import { Document, Page, StyleSheet, Text, View } from "@react-pdf/renderer";
 
-import type { Experience, Profile, Project, Skill } from "@/db/schemas";
+import type { Project } from "@/db/schemas";
+import type { Experience, Profile, Skill } from "@/lib/data";
 
 const styles = StyleSheet.create({
   page: {
@@ -106,7 +107,7 @@ const styles = StyleSheet.create({
   },
 });
 
-function formatDate(date: Date | null): string {
+function formatDate(date: Date | null | undefined): string {
   if (!date) return "Present";
   return new Intl.DateTimeFormat("en-US", {
     year: "numeric",
@@ -115,7 +116,7 @@ function formatDate(date: Date | null): string {
 }
 
 interface ResumeDocumentProps {
-  profile: Profile | null;
+  profile: Profile;
   experiences: Experience[];
   skills: Skill[];
   projects: Project[];
@@ -144,19 +145,17 @@ export function ResumeDocument({
       <Page size="A4" style={styles.page}>
         {/* Header */}
         <View style={styles.header}>
-          <Text style={styles.name}>{profile?.name ?? "Your Name"}</Text>
-          <Text style={styles.title}>
-            {profile?.title ?? "Software Developer"}
-          </Text>
+          <Text style={styles.name}>{profile.name}</Text>
+          <Text style={styles.title}>{profile.title}</Text>
           <Text style={styles.contact}>
-            {[profile?.email, profile?.location, profile?.websiteUrl]
+            {[profile.email, profile.location, profile.websiteUrl]
               .filter(Boolean)
               .join(" • ")}
           </Text>
         </View>
 
         {/* Bio */}
-        {profile?.bio && (
+        {profile.bio && (
           <View style={styles.section}>
             <Text style={styles.sectionTitle}>About</Text>
             <Text style={styles.experienceDescription}>{profile.bio}</Text>

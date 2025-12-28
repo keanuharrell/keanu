@@ -1,13 +1,10 @@
 "use client";
 
 import {
-  Briefcase01Icon,
   DashboardSpeed01Icon,
   Home01Icon,
   Note01Icon,
-  Settings01Icon,
   StackStarIcon,
-  UserIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import Link from "next/link";
@@ -37,11 +34,8 @@ interface AppSidebarProps {
 
 const navItems = [
   { href: "/studio", label: "Dashboard", icon: DashboardSpeed01Icon },
-  { href: "/studio/profile", label: "Profile", icon: UserIcon },
   { href: "/studio/posts", label: "Posts", icon: Note01Icon },
   { href: "/studio/projects", label: "Projects", icon: StackStarIcon },
-  { href: "/studio/experiences", label: "Experiences", icon: Briefcase01Icon },
-  { href: "/studio/skills", label: "Skills", icon: Settings01Icon },
 ];
 
 export function AppSidebar({ user }: AppSidebarProps) {
