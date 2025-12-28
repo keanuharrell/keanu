@@ -4,10 +4,13 @@ import { notFound } from "next/navigation";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
+import { BlogPostingJsonLd } from "@/components/json-ld";
 import { Container } from "@/components/layout";
 import { buttonVariants } from "@/components/ui/button";
 import { getPostBySlug } from "@/lib/db";
 import { cn } from "@/lib/utils";
+
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://keanuharrell.com";
 
 interface BlogPostPageProps {
   params: Promise<{ slug: string }>;
@@ -49,34 +52,44 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   }
 
   return (
-    <article className="py-24">
-      <Container>
-        <Link
-          href="/blog"
-          className={cn(
-            buttonVariants({ variant: "ghost", size: "sm" }),
-            "mb-8 -ml-3",
-          )}
-        >
-          ← Back to blog
-        </Link>
-
-        <header className="mb-12">
-          <h1 className="font-medium text-3xl tracking-tight md:text-4xl">
-            {post.title}
-          </h1>
-          <time
-            className="mt-4 block text-muted-foreground text-sm"
-            dateTime={post.publishedAt?.toISOString()}
+    <>
+      <BlogPostingJsonLd
+        title={post.title}
+        description={post.excerpt ?? undefined}
+        publishedAt={post.publishedAt}
+        updatedAt={post.updatedAt}
+        slug={slug}
+        url={siteUrl}
+      />
+      <article className="py-24">
+        <Container>
+          <Link
+            href="/blog"
+            className={cn(
+              buttonVariants({ variant: "ghost", size: "sm" }),
+              "mb-8 -ml-3",
+            )}
           >
-            {formatDate(post.publishedAt)}
-          </time>
-        </header>
+            ← Back to blog
+          </Link>
 
-        <div className="prose prose-invert prose-lg max-w-none prose-code:rounded prose-pre:border prose-pre:border-border prose-code:bg-muted prose-pre:bg-muted prose-code:px-1.5 prose-code:py-0.5 prose-code:font-normal prose-headings:font-medium prose-a:text-primary prose-headings:tracking-tight prose-a:no-underline prose-code:before:content-none prose-code:after:content-none hover:prose-a:underline">
-          <Markdown remarkPlugins={[remarkGfm]}>{post.content}</Markdown>
-        </div>
-      </Container>
-    </article>
+          <header className="mb-12">
+            <h1 className="font-medium text-3xl tracking-tight md:text-4xl">
+              {post.title}
+            </h1>
+            <time
+              className="mt-4 block text-muted-foreground text-sm"
+              dateTime={post.publishedAt?.toISOString()}
+            >
+              {formatDate(post.publishedAt)}
+            </time>
+          </header>
+
+          <div className="prose prose-invert prose-lg max-w-none prose-code:rounded prose-pre:border prose-pre:border-border prose-code:bg-muted prose-pre:bg-muted prose-code:px-1.5 prose-code:py-0.5 prose-code:font-normal prose-headings:font-medium prose-a:text-primary prose-headings:tracking-tight prose-a:no-underline prose-code:before:content-none prose-code:after:content-none hover:prose-a:underline">
+            <Markdown remarkPlugins={[remarkGfm]}>{post.content}</Markdown>
+          </div>
+        </Container>
+      </article>
+    </>
   );
 }
