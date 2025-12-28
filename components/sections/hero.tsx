@@ -1,8 +1,4 @@
-import {
-  Github01Icon,
-  Linkedin01Icon,
-  NewTwitterIcon,
-} from "@hugeicons/core-free-icons";
+import { Github01Icon, Linkedin01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 
 import { Container } from "@/components/layout";
@@ -12,11 +8,6 @@ const socialLinks = [
     name: "GitHub",
     href: "https://github.com/keanuharrell",
     icon: Github01Icon,
-  },
-  {
-    name: "Twitter",
-    href: "https://twitter.com/keanuharrell",
-    icon: NewTwitterIcon,
   },
   {
     name: "LinkedIn",

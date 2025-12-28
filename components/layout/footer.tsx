@@ -1,9 +1,15 @@
+"use client";
+
 import {
+  ArrowUp01Icon,
   Github01Icon,
   Linkedin01Icon,
-  NewTwitterIcon,
+  Mail01Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
+import Link from "next/link";
+
+import { Button } from "@/components/ui/button";
 
 const socialLinks = [
   {
@@ -12,22 +18,42 @@ const socialLinks = [
     icon: Github01Icon,
   },
   {
-    name: "Twitter",
-    href: "https://twitter.com/keanuharrell",
-    icon: NewTwitterIcon,
-  },
-  {
     name: "LinkedIn",
     href: "https://linkedin.com/in/keanuharrell",
     icon: Linkedin01Icon,
   },
 ];
 
+const navLinks = [
+  { href: "/about", label: "About" },
+  { href: "/blog", label: "Blog" },
+];
+
 export function Footer() {
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
     <footer className="mt-24 pb-8">
-      <div className="mx-auto flex w-fit flex-col items-center gap-3 rounded-full border border-border/50 bg-background/80 px-6 py-4 shadow-black/5 shadow-sm ring-1 ring-white/5 ring-inset backdrop-blur-md">
-        <div className="flex items-center gap-4">
+      <div className="mx-auto flex w-fit flex-col items-center gap-4 rounded-2xl border border-border/50 bg-background/80 px-6 py-5 shadow-black/5 shadow-sm ring-1 ring-white/5 ring-inset backdrop-blur-md md:flex-row md:gap-6">
+        {/* Navigation */}
+        <nav className="flex items-center gap-4">
+          {navLinks.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className="text-muted-foreground text-sm transition-colors hover:text-foreground"
+            >
+              {link.label}
+            </Link>
+          ))}
+        </nav>
+
+        <div className="hidden h-4 w-px bg-border/50 md:block" />
+
+        {/* Social Links */}
+        <div className="flex items-center gap-3">
           {socialLinks.map((link) => (
             <a
               key={link.name}
@@ -40,11 +66,38 @@ export function Footer() {
               <HugeiconsIcon icon={link.icon} className="size-5" />
             </a>
           ))}
-          <div className="h-4 w-px bg-border/50" />
-          <p className="text-muted-foreground text-sm">
-            © {new Date().getFullYear()} Keanu
-          </p>
         </div>
+
+        <div className="hidden h-4 w-px bg-border/50 md:block" />
+
+        {/* Email */}
+        <a
+          href="mailto:keanuharrell@icloud.com"
+          className="flex items-center gap-2 text-muted-foreground text-sm transition-colors hover:text-foreground"
+        >
+          <HugeiconsIcon icon={Mail01Icon} className="size-4" />
+          keanuharrell@icloud.com
+        </a>
+
+        <div className="hidden h-4 w-px bg-border/50 md:block" />
+
+        {/* Copyright */}
+        <p className="text-muted-foreground text-sm">
+          © {new Date().getFullYear()} Keanu
+        </p>
+
+        <div className="hidden h-4 w-px bg-border/50 md:block" />
+
+        {/* Back to Top */}
+        <Button
+          variant="ghost"
+          size="icon"
+          className="size-8 rounded-full"
+          onClick={scrollToTop}
+          aria-label="Back to top"
+        >
+          <HugeiconsIcon icon={ArrowUp01Icon} className="size-4" />
+        </Button>
       </div>
     </footer>
   );

@@ -1,16 +1,16 @@
-import { BlogPreview, Hero, ProjectsSection } from "@/components/sections";
-import { getAllProjects, getRecentPosts } from "@/lib/db";
+import { BlogPreview, Hero, ProjectsPreview } from "@/components/sections";
+import { getFeaturedProjects, getRecentPosts } from "@/lib/db";
 
 export default async function Page() {
   const [projects, posts] = await Promise.all([
-    getAllProjects(),
+    getFeaturedProjects(),
     getRecentPosts(5),
   ]);
 
   return (
     <>
       <Hero />
-      <ProjectsSection projects={projects} />
+      <ProjectsPreview projects={projects} />
       <BlogPreview posts={posts} />
     </>
   );
