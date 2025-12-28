@@ -4,20 +4,8 @@ import { Github01Icon, Linkedin01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { motion } from "motion/react";
 
+import { DevToIcon, MediumIcon } from "@/components/icons";
 import { Container } from "@/components/layout";
-
-const socialLinks = [
-  {
-    name: "GitHub",
-    href: "https://github.com/keanuharrell",
-    icon: Github01Icon,
-  },
-  {
-    name: "LinkedIn",
-    href: "https://linkedin.com/in/keanuharrell",
-    icon: Linkedin01Icon,
-  },
-];
 
 export function Hero() {
   return (
@@ -55,26 +43,62 @@ export function Hero() {
           }}
           className="mt-8 flex gap-4"
         >
-          {socialLinks.map((link, index) => (
-            <motion.a
-              key={link.name}
-              href={link.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-muted-foreground transition-colors hover:text-foreground"
-              aria-label={link.name}
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.95 }}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{
-                duration: 0.3,
-                delay: 0.3 + index * 0.1,
-              }}
-            >
-              <HugeiconsIcon icon={link.icon} className="size-5" />
-            </motion.a>
-          ))}
+          <motion.a
+            href="https://github.com/keanuharrell"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-muted-foreground transition-colors hover:text-foreground"
+            aria-label="GitHub"
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: 0.3 }}
+          >
+            <HugeiconsIcon icon={Github01Icon} className="size-5" />
+          </motion.a>
+          <motion.a
+            href="https://linkedin.com/in/keanuharrell"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-muted-foreground transition-colors hover:text-foreground"
+            aria-label="LinkedIn"
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: 0.4 }}
+          >
+            <HugeiconsIcon icon={Linkedin01Icon} className="size-5" />
+          </motion.a>
+          <motion.a
+            href="https://medium.com/@keanuharrell"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-muted-foreground transition-colors hover:text-foreground"
+            aria-label="Medium"
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: 0.5 }}
+          >
+            <MediumIcon />
+          </motion.a>
+          <motion.a
+            href="https://dev.to/keanu-harrell"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-muted-foreground transition-colors hover:text-foreground"
+            aria-label="Dev.to"
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: 0.6 }}
+          >
+            <DevToIcon />
+          </motion.a>
         </motion.div>
       </Container>
     </section>

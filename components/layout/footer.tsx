@@ -11,20 +11,8 @@ import { motion, useInView } from "motion/react";
 import Link from "next/link";
 import { useRef } from "react";
 
+import { DevToIcon, MediumIcon } from "@/components/icons";
 import { Button } from "@/components/ui/button";
-
-const socialLinks = [
-  {
-    name: "GitHub",
-    href: "https://github.com/keanuharrell",
-    icon: Github01Icon,
-  },
-  {
-    name: "LinkedIn",
-    href: "https://linkedin.com/in/keanuharrell",
-    icon: Linkedin01Icon,
-  },
-];
 
 const navLinks = [
   { href: "/about", label: "About" },
@@ -65,20 +53,50 @@ export function Footer() {
 
         {/* Social Links */}
         <div className="flex items-center gap-3">
-          {socialLinks.map((link) => (
-            <motion.a
-              key={link.name}
-              href={link.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-muted-foreground transition-colors hover:text-foreground"
-              aria-label={link.name}
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <HugeiconsIcon icon={link.icon} className="size-5" />
-            </motion.a>
-          ))}
+          <motion.a
+            href="https://github.com/keanuharrell"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-muted-foreground transition-colors hover:text-foreground"
+            aria-label="GitHub"
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <HugeiconsIcon icon={Github01Icon} className="size-5" />
+          </motion.a>
+          <motion.a
+            href="https://linkedin.com/in/keanuharrell"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-muted-foreground transition-colors hover:text-foreground"
+            aria-label="LinkedIn"
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <HugeiconsIcon icon={Linkedin01Icon} className="size-5" />
+          </motion.a>
+          <motion.a
+            href="https://medium.com/@keanuharrell"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-muted-foreground transition-colors hover:text-foreground"
+            aria-label="Medium"
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <MediumIcon />
+          </motion.a>
+          <motion.a
+            href="https://dev.to/keanu-harrell"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-muted-foreground transition-colors hover:text-foreground"
+            aria-label="Dev.to"
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <DevToIcon />
+          </motion.a>
         </div>
 
         <div className="hidden h-4 w-px bg-border/50 md:block" />
