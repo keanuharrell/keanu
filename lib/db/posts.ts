@@ -1,4 +1,4 @@
-import { desc, eq } from "drizzle-orm";
+import { and, desc, eq } from "drizzle-orm";
 
 import { db } from "@/db";
 import { type NewPost, posts } from "@/db/schemas";
@@ -21,6 +21,14 @@ export async function getRecentPosts(limit = 5) {
     .where(eq(posts.isPublished, true))
     .orderBy(desc(posts.publishedAt))
     .limit(limit);
+}
+
+export async function getFeaturedPosts() {
+  return db
+    .select()
+    .from(posts)
+    .where(and(eq(posts.isPublished, true), eq(posts.isFeatured, true)))
+    .orderBy(desc(posts.publishedAt));
 }
 
 export async function getPostBySlug(slug: string) {

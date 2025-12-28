@@ -17,6 +17,7 @@ export const posts = pgTable("posts", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
   isPublished: boolean("is_published").default(false).notNull(),
+  isFeatured: boolean("is_featured").default(false).notNull(),
   viewCount: integer("view_count").default(0).notNull(),
 });
 

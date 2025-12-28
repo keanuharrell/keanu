@@ -1,11 +1,21 @@
 "use client";
 
-import { Delete01Icon, Edit01Icon } from "@hugeicons/core-free-icons";
+import {
+  Copy01Icon,
+  Delete01Icon,
+  Edit01Icon,
+  ViewIcon,
+} from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import Link from "next/link";
 import { useTransition } from "react";
 
-import { deletePostAction, togglePublishAction } from "@/app/actions/posts";
+import {
+  deletePostAction,
+  duplicatePostAction,
+  toggleFeaturedAction,
+  togglePublishAction,
+} from "@/app/actions/posts";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -59,6 +69,18 @@ export function PostsTable({ posts }: PostsTableProps) {
     });
   };
 
+  const handleDuplicate = (id: number) => {
+    startTransition(async () => {
+      await duplicatePostAction(id);
+    });
+  };
+
+  const handleToggleFeatured = (id: number, isFeatured: boolean) => {
+    startTransition(async () => {
+      await toggleFeaturedAction(id, isFeatured);
+    });
+  };
+
   if (posts.length === 0) {
     return (
       <div className="flex h-48 flex-col items-center justify-center rounded-lg border border-dashed">
@@ -80,6 +102,7 @@ export function PostsTable({ posts }: PostsTableProps) {
           <TableRow>
             <TableHead>Title</TableHead>
             <TableHead>Status</TableHead>
+            <TableHead>Featured</TableHead>
             <TableHead>Views</TableHead>
             <TableHead>Created</TableHead>
             <TableHead className="text-right">Actions</TableHead>
@@ -108,18 +131,47 @@ export function PostsTable({ posts }: PostsTableProps) {
                   </Badge>
                 </div>
               </TableCell>
+              <TableCell>
+                <Switch
+                  checked={post.isFeatured}
+                  onCheckedChange={(checked) =>
+                    handleToggleFeatured(post.id, checked)
+                  }
+                  disabled={isPending}
+                />
+              </TableCell>
               <TableCell>{post.viewCount}</TableCell>
               <TableCell>{formatDate(post.createdAt)}</TableCell>
               <TableCell>
                 <div className="flex justify-end gap-1">
                   <Link
+                    href={`/blog/${post.slug}`}
+                    target="_blank"
+                    className={cn(
+                      buttonVariants({ variant: "ghost", size: "icon-sm" }),
+                    )}
+                    title="Preview"
+                  >
+                    <HugeiconsIcon icon={ViewIcon} className="size-4" />
+                  </Link>
+                  <Link
                     href={`/studio/posts/${post.id}`}
                     className={cn(
                       buttonVariants({ variant: "ghost", size: "icon-sm" }),
                     )}
+                    title="Edit"
                   >
                     <HugeiconsIcon icon={Edit01Icon} className="size-4" />
                   </Link>
+                  <Button
+                    variant="ghost"
+                    size="icon-sm"
+                    onClick={() => handleDuplicate(post.id)}
+                    disabled={isPending}
+                    title="Duplicate"
+                  >
+                    <HugeiconsIcon icon={Copy01Icon} className="size-4" />
+                  </Button>
                   <AlertDialog>
                     <AlertDialogTrigger
                       render={<Button variant="ghost" size="icon-sm" />}

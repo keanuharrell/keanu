@@ -1,12 +1,19 @@
+import { Clock01Icon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import Markdown from "react-markdown";
-import remarkGfm from "remark-gfm";
 
+import { TableOfContents } from "@/components/blog";
 import { BlogPostingJsonLd } from "@/components/json-ld";
 import { Container } from "@/components/layout";
 import { buttonVariants } from "@/components/ui/button";
+import {
+  calculateReadingTime,
+  extractTableOfContents,
+  formatReadingTime,
+  processMarkdown,
+} from "@/lib/blog";
 import { getPostBySlug } from "@/lib/db";
 import { cn } from "@/lib/utils";
 
@@ -51,6 +58,10 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     notFound();
   }
 
+  const readingTime = calculateReadingTime(post.content);
+  const toc = extractTableOfContents(post.content);
+  const htmlContent = await processMarkdown(post.content);
+
   return (
     <>
       <BlogPostingJsonLd
@@ -63,30 +74,40 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       />
       <article className="py-24">
         <Container>
-          <Link
-            href="/blog"
-            className={cn(
-              buttonVariants({ variant: "ghost", size: "sm" }),
-              "mb-8 -ml-3",
-            )}
-          >
-            ← Back to blog
-          </Link>
+          <div className="grid grid-cols-1 gap-12 xl:grid-cols-[1fr_250px]">
+            <div>
+              <Link
+                href="/blog"
+                className={cn(
+                  buttonVariants({ variant: "ghost", size: "sm" }),
+                  "mb-8 -ml-3",
+                )}
+              >
+                ← Back to blog
+              </Link>
 
-          <header className="mb-12">
-            <h1 className="font-medium text-3xl tracking-tight md:text-4xl">
-              {post.title}
-            </h1>
-            <time
-              className="mt-4 block text-muted-foreground text-sm"
-              dateTime={post.publishedAt?.toISOString()}
-            >
-              {formatDate(post.publishedAt)}
-            </time>
-          </header>
+              <header className="mb-12">
+                <h1 className="font-medium text-3xl tracking-tight md:text-4xl">
+                  {post.title}
+                </h1>
+                <div className="mt-4 flex items-center gap-4 text-muted-foreground text-sm">
+                  <time dateTime={post.publishedAt?.toISOString()}>
+                    {formatDate(post.publishedAt)}
+                  </time>
+                  <span className="flex items-center gap-1.5">
+                    <HugeiconsIcon icon={Clock01Icon} className="size-4" />
+                    {formatReadingTime(readingTime)}
+                  </span>
+                </div>
+              </header>
 
-          <div className="prose prose-invert prose-lg max-w-none prose-code:rounded prose-pre:border prose-pre:border-border prose-code:bg-muted prose-pre:bg-muted prose-code:px-1.5 prose-code:py-0.5 prose-code:font-normal prose-headings:font-medium prose-a:text-primary prose-headings:tracking-tight prose-a:no-underline prose-code:before:content-none prose-code:after:content-none hover:prose-a:underline">
-            <Markdown remarkPlugins={[remarkGfm]}>{post.content}</Markdown>
+              <div
+                className="prose prose-lg dark:prose-invert max-w-none prose-code:rounded prose-pre:border prose-pre:border-border prose-code:bg-muted prose-pre:bg-transparent prose-pre:p-0 prose-code:px-1.5 prose-code:py-0.5 prose-code:font-normal prose-headings:font-medium prose-a:text-primary prose-headings:tracking-tight prose-a:no-underline prose-code:before:content-none prose-code:after:content-none hover:prose-a:underline [&_figure]:my-0 [&_figure_pre]:overflow-x-auto [&_figure_pre]:rounded-lg [&_figure_pre]:border [&_figure_pre]:border-border [&_figure_pre]:p-4"
+                dangerouslySetInnerHTML={{ __html: htmlContent }}
+              />
+            </div>
+
+            <TableOfContents items={toc} />
           </div>
         </Container>
       </article>

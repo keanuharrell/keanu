@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 
 import type { NewPost } from "@/db/schemas";
-import { createPost, deletePost, updatePost } from "@/lib/db";
+import { createPost, deletePost, getPostById, updatePost } from "@/lib/db";
 
 export async function createPostAction(data: NewPost) {
   const post = await createPost(data);
@@ -40,6 +40,30 @@ export async function togglePublishAction(id: number, isPublished: boolean) {
   revalidatePath("/studio/posts");
   revalidatePath("/blog");
   revalidatePath(`/blog/${post?.slug}`);
+  revalidatePath("/");
+  return post;
+}
+
+export async function duplicatePostAction(id: number) {
+  const original = await getPostById(id);
+  if (!original) return null;
+
+  const post = await createPost({
+    slug: `${original.slug}-copy`,
+    title: `${original.title} (Copy)`,
+    excerpt: original.excerpt,
+    content: original.content,
+    isPublished: false,
+  });
+
+  revalidatePath("/studio/posts");
+  return post;
+}
+
+export async function toggleFeaturedAction(id: number, isFeatured: boolean) {
+  const post = await updatePost(id, { isFeatured });
+  revalidatePath("/studio/posts");
+  revalidatePath("/blog");
   revalidatePath("/");
   return post;
 }
