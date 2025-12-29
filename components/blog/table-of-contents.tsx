@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
+import { useCallback } from "react";
 
 import type { TocItem } from "@/lib/blog";
 import { cn } from "@/lib/utils";
@@ -10,6 +11,28 @@ interface TableOfContentsProps {
 }
 
 export function TableOfContents({ items }: TableOfContentsProps) {
+  const prefersReducedMotion = useReducedMotion();
+
+  const handleClick = useCallback(
+    (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+      e.preventDefault();
+      const element = document.getElementById(id);
+      if (!element) return;
+
+      const offset = 100; // Account for sticky header
+      const top = element.getBoundingClientRect().top + window.scrollY - offset;
+
+      window.scrollTo({
+        top,
+        behavior: prefersReducedMotion ? "auto" : "smooth",
+      });
+
+      // Update URL without scrolling
+      window.history.pushState(null, "", `#${id}`);
+    },
+    [prefersReducedMotion],
+  );
+
   if (items.length === 0) return null;
 
   return (
@@ -27,6 +50,7 @@ export function TableOfContents({ items }: TableOfContentsProps) {
             <li key={item.id}>
               <a
                 href={`#${item.id}`}
+                onClick={(e) => handleClick(e, item.id)}
                 className={cn(
                   "block text-muted-foreground transition-colors hover:text-foreground",
                   item.level === 3 && "pl-4",

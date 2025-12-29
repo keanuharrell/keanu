@@ -6,7 +6,6 @@ import { notFound } from "next/navigation";
 
 import { TableOfContents } from "@/components/blog";
 import { BlogPostingJsonLd } from "@/components/json-ld";
-import { Container } from "@/components/layout";
 import { buttonVariants } from "@/components/ui/button";
 import {
   calculateReadingTime,
@@ -72,10 +71,10 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         slug={slug}
         url={siteUrl}
       />
-      <article className="py-24">
-        <Container>
-          <div className="grid grid-cols-1 gap-12 xl:grid-cols-[1fr_250px]">
-            <div>
+      <article>
+        <div className="mx-auto w-full max-w-3xl px-6 md:px-8 xl:max-w-6xl">
+          <div className="xl:grid xl:grid-cols-[1fr_280px] xl:gap-16">
+            <div className="mx-auto max-w-3xl xl:mx-0">
               <Link
                 href="/blog"
                 className={cn(
@@ -109,7 +108,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
             <TableOfContents items={toc} />
           </div>
-        </Container>
+        </div>
       </article>
     </>
   );

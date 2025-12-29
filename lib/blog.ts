@@ -1,3 +1,4 @@
+import GithubSlugger from "github-slugger";
 import rehypePrettyCode from "rehype-pretty-code";
 import rehypeSlug from "rehype-slug";
 import rehypeStringify from "rehype-stringify";
@@ -36,14 +37,12 @@ export interface TocItem {
 export function extractTableOfContents(content: string): TocItem[] {
   const headingRegex = /^(#{2,4})\s+(.+)$/gm;
   const matches = content.matchAll(headingRegex);
+  const slugger = new GithubSlugger();
 
   return Array.from(matches).map((match) => {
     const level = match[1].length;
     const text = match[2].trim();
-    const id = text
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g, "-")
-      .replace(/(^-|-$)/g, "");
+    const id = slugger.slug(text);
 
     return { id, text, level };
   });
