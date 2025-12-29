@@ -17,6 +17,7 @@ import { Button } from "@/components/ui/button";
 const navLinks = [
   { href: "/about", label: "About" },
   { href: "/blog", label: "Blog" },
+  { href: "/contact", label: "Contact" },
 ];
 
 export function Footer() {

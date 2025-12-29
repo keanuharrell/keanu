@@ -74,16 +74,17 @@ export function Header() {
         {/* Desktop Actions */}
         <div className="hidden items-center gap-0.5 md:flex">
           <ThemeToggle />
-          <a
-            href="mailto:keanuharrell@icloud.com"
+          <Link
+            href="/contact"
             className={cn(
               buttonVariants({ variant: "default", size: "sm" }),
               "gap-1.5 rounded-full",
+              isActive("/contact") && "bg-primary/90",
             )}
           >
             <HugeiconsIcon icon={Mail01Icon} className="size-4" />
             Contact
-          </a>
+          </Link>
         </div>
 
         {/* Mobile Menu */}
@@ -120,8 +121,8 @@ export function Header() {
                   </Link>
                 ))}
                 <div className="my-2 h-px bg-border" />
-                <a
-                  href="mailto:keanuharrell@icloud.com"
+                <Link
+                  href="/contact"
                   className={cn(
                     buttonVariants({ variant: "default" }),
                     "justify-start gap-2",
@@ -129,7 +130,7 @@ export function Header() {
                 >
                   <HugeiconsIcon icon={Mail01Icon} className="size-4" />
                   Contact
-                </a>
+                </Link>
               </nav>
             </SheetContent>
           </Sheet>
