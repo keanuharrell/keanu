@@ -31,11 +31,16 @@ export async function getFeaturedPosts() {
     .orderBy(desc(posts.publishedAt));
 }
 
-export async function getPostBySlug(slug: string) {
+export async function getPostBySlug(slug: string, publishedOnly = false) {
+  const conditions = [eq(posts.slug, slug)];
+  if (publishedOnly) {
+    conditions.push(eq(posts.isPublished, true));
+  }
+
   const result = await db
     .select()
     .from(posts)
-    .where(eq(posts.slug, slug))
+    .where(and(...conditions))
     .limit(1);
 
   return result[0] ?? null;

@@ -26,7 +26,7 @@ export async function generateMetadata({
   params,
 }: BlogPostPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const post = await getPostBySlug(slug);
+  const post = await getPostBySlug(slug, true);
 
   if (!post) {
     return {
@@ -51,7 +51,7 @@ function formatDate(date: Date | null): string {
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const { slug } = await params;
-  const post = await getPostBySlug(slug);
+  const post = await getPostBySlug(slug, true);
 
   if (!post) {
     notFound();

@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 };
 
 export default async function BlogPage() {
-  const posts = await getAllPosts();
+  const posts = await getAllPosts(true);
 
   return (
     <section className="py-24">
