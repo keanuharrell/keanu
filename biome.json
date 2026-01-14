@@ -12,7 +12,12 @@
   },
   "files": {
     "ignoreUnknown": true,
-    "includes": ["**", "!**/db/migrations", "!!**/components/ui"]
+    "includes": [
+      "**",
+      "!**/db/migrations",
+      "!!**/components/ui",
+      "!vercel.json"
+    ]
   },
   "formatter": {
     "enabled": true,
