@@ -3,6 +3,7 @@
 import { Mail01Icon, Menu01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { motion } from "motion/react";
+import type { Route } from "next";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -17,7 +18,7 @@ import {
 } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 
-const navLinks = [
+const navLinks: { href: Route; label: string }[] = [
   { href: "/about", label: "About" },
   { href: "/projects", label: "Projects" },
   { href: "/blog", label: "Blog" },

@@ -19,7 +19,7 @@ export default async function StudioLayout({
     headers: await headers(),
   });
 
-  if (!session) {
+  if (!session?.session) {
     redirect("/login");
   }
 

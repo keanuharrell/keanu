@@ -1,17 +1,18 @@
-import { BlogPreview, Hero, ProjectsPreview } from "@/components/sections";
-import { getFeaturedProjects, getRecentPosts } from "@/lib/db";
+import { Suspense } from "react";
+import { Hero } from "@/components/sections";
+import { BlogPreview, BlogPreviewSkeleton } from "@/features/blog";
+import { ProjectsPreview, ProjectsPreviewSkeleton } from "@/features/projects";
 
-export default async function Page() {
-  const [projects, posts] = await Promise.all([
-    getFeaturedProjects(),
-    getRecentPosts(5),
-  ]);
-
+export default function Page() {
   return (
     <>
       <Hero />
-      <ProjectsPreview projects={projects} />
-      <BlogPreview posts={posts} />
+      <Suspense fallback={<ProjectsPreviewSkeleton />}>
+        <ProjectsPreview />
+      </Suspense>
+      <Suspense fallback={<BlogPreviewSkeleton />}>
+        <BlogPreview />
+      </Suspense>
     </>
   );
 }

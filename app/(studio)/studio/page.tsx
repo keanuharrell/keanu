@@ -1,5 +1,6 @@
 import { Note01Icon, StackStarIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
+import type { Route } from "next";
 import Link from "next/link";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -11,7 +12,13 @@ export default async function StudioDashboardPage() {
     getAllProjects(),
   ]);
 
-  const stats = [
+  const stats: {
+    title: string;
+    value: number;
+    icon: typeof Note01Icon;
+    href: Route;
+    description: string;
+  }[] = [
     {
       title: "Posts",
       value: posts.length,

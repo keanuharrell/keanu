@@ -10,6 +10,8 @@ const nextConfig: NextConfig = {
     ],
   },
   serverExternalPackages: ["@react-pdf/renderer"],
+  cacheComponents: true,
+  typedRoutes: true,
 };
 
 export default nextConfig;

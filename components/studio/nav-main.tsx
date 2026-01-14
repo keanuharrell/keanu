@@ -2,6 +2,7 @@
 
 import type { IconSvgElement } from "@hugeicons/react";
 import { HugeiconsIcon } from "@hugeicons/react";
+import type { Route } from "next";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -15,7 +16,7 @@ import {
 
 interface NavMainProps {
   items: {
-    href: string;
+    href: Route;
     label: string;
     icon: IconSvgElement;
   }[];

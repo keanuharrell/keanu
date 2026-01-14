@@ -26,6 +26,9 @@
       "security": {
         "noDangerouslySetInnerHtml": "off"
       },
+      "suspicious": {
+        "noArrayIndexKey": "off"
+      },
       "nursery": {
         "useSortedClasses": {
           "fix": "safe",

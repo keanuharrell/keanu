@@ -1,9 +1,9 @@
 "use client";
 
 import { motion, useInView } from "motion/react";
+import type { Route } from "next";
 import Link from "next/link";
 import { useRef } from "react";
-
 import { Badge } from "@/components/ui/badge";
 import type { Project } from "@/db/schemas";
 import type { Skill } from "@/lib/data";
@@ -109,7 +109,7 @@ export function AnimatedProjectsGrid({ projects }: AnimatedProjectsGridProps) {
           <div className="mt-4 flex gap-3">
             {project.githubUrl && (
               <Link
-                href={project.githubUrl}
+                href={project.githubUrl as Route}
                 target="_blank"
                 className="text-muted-foreground text-sm hover:text-foreground"
               >
@@ -118,7 +118,7 @@ export function AnimatedProjectsGrid({ projects }: AnimatedProjectsGridProps) {
             )}
             {project.liveUrl && (
               <Link
-                href={project.liveUrl}
+                href={project.liveUrl as Route}
                 target="_blank"
                 className="text-muted-foreground text-sm hover:text-foreground"
               >

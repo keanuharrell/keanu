@@ -7,6 +7,7 @@ import {
   StackStarIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
+import type { Route } from "next";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
@@ -32,7 +33,11 @@ interface AppSidebarProps {
   };
 }
 
-const navItems = [
+const navItems: {
+  href: Route;
+  label: string;
+  icon: typeof DashboardSpeed01Icon;
+}[] = [
   { href: "/studio", label: "Dashboard", icon: DashboardSpeed01Icon },
   { href: "/studio/posts", label: "Posts", icon: Note01Icon },
   { href: "/studio/projects", label: "Projects", icon: StackStarIcon },
