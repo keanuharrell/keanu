@@ -1,33 +1,23 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 
 import { Container } from "@/components/layout";
-import { ProjectCard } from "@/components/project-card";
 import { SectionHeading } from "@/components/section-heading";
-import { getAllProjects } from "@/lib/db";
+import { ProjectsList, ProjectsListSkeleton } from "@/features/projects";
 
 export const metadata: Metadata = {
   title: "Projects",
   description: "A collection of projects I've worked on.",
 };
 
-export default async function ProjectsPage() {
-  const projects = await getAllProjects();
-
+export default function ProjectsPage() {
   return (
     <section className="py-24">
       <Container>
         <SectionHeading>Projects</SectionHeading>
-        {projects.length > 0 ? (
-          <div className="grid gap-4 md:grid-cols-2">
-            {projects.map((project) => (
-              <ProjectCard key={project.id} project={project} />
-            ))}
-          </div>
-        ) : (
-          <p className="text-muted-foreground">
-            No projects yet. Check back soon!
-          </p>
-        )}
+        <Suspense fallback={<ProjectsListSkeleton />}>
+          <ProjectsList />
+        </Suspense>
       </Container>
     </section>
   );

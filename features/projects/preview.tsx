@@ -1,5 +1,5 @@
+import { cacheLife, cacheTag } from "next/cache";
 import Link from "next/link";
-
 import { Container } from "@/components/layout";
 import { FadeIn, StaggerItem, StaggerList } from "@/components/motion";
 import { ProjectCard } from "@/components/project-card";
@@ -10,6 +10,10 @@ import { getFeaturedProjects } from "@/lib/db";
 import { cn } from "@/lib/utils";
 
 export async function Preview() {
+  "use cache";
+  cacheTag("projects-preview");
+  cacheLife("days");
+
   const projects = await getFeaturedProjects();
   return (
     <section id="projects" className="py-16">

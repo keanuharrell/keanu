@@ -1,5 +1,5 @@
+import { cacheLife, cacheTag } from "next/cache";
 import Link from "next/link";
-
 import { Container } from "@/components/layout";
 import { FadeIn, StaggerItem, StaggerList } from "@/components/motion";
 import { PostListItem } from "@/components/post-list-item";
@@ -10,6 +10,10 @@ import { getRecentPosts } from "@/lib/db";
 import { cn } from "@/lib/utils";
 
 export async function Preview() {
+  "use cache";
+  cacheTag("blog-preview");
+  cacheLife("days");
+
   const posts = await getRecentPosts(5);
   return (
     <section className="py-16">

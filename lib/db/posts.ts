@@ -3,7 +3,11 @@ import { and, desc, eq } from "drizzle-orm";
 import { db } from "@/db";
 import { type NewPost, posts } from "@/db/schemas";
 
-export async function getAllPosts(publishedOnly = false) {
+export async function getAllPosts({
+  publishedOnly = true,
+}: {
+  publishedOnly?: boolean;
+} = {}) {
   if (publishedOnly) {
     return db
       .select()

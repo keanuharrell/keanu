@@ -5,7 +5,7 @@ import { getAllPosts, getAllProjects } from "@/lib/db";
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://keanuharrell.com";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const posts = await getAllPosts(true);
+  const posts = await getAllPosts({ publishedOnly: true });
   const projects = await getAllProjects();
 
   const blogUrls = posts.map((post) => ({
