@@ -4,8 +4,6 @@ import { experiences, profile, skills } from "@/lib/data";
 import { getAllProjects } from "@/lib/db";
 import { ResumeDocument } from "@/lib/pdf/resume-template";
 
-export const dynamic = "force-dynamic";
-
 export async function GET() {
   try {
     const projects = await getAllProjects();
